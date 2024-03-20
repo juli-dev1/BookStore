@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 * Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-* For Backend i use JSON Server. Run `json-server --watch db.json` in a new CMD in order to have backend functionality.
+* For Backend i use JSON Server. Run `npm install json-server`, `json-server --watch db.json` in a new CMD in order to have backend functionality.
 
 ## Code scaffolding
 
