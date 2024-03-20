@@ -1,0 +1,82 @@
+<div class="container p-3 p-grid p-dir-col surface-100  border-round">
+
+  <div class="flex flex-wrap">
+    <!-- Image, Author and Rating Section  -->
+    <div class="p-col mr-8">
+
+      <p-carousel [value]="book.images" [circular]="false" [responsiveOptions]="responsiveOptions">
+        <ng-template let-image pTemplate="header">
+          <img [src]="image" style="max-height: 400px;">
+        </ng-template>
+        <ng-template let-image pTemplate="item">
+          <img [src]="image" style="max-height: 500px;">
+        </ng-template>
+      </p-carousel>
+
+      <div class="ml-6">
+        <div class="flex align-items-center">
+          <i class="pi pi-user" style="font-size: 2rem"></i>
+          <h4 class="ml-2">{{ book.publisher }}</h4>
+        </div>
+        <!-- Ratings -->
+        <div>
+          <p-rating [(ngModel)]="bookRating" [readonly]="true" [cancel]="false"></p-rating>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Details Section  -->
+    <div class="p-col w-5 ml-5">
+      <h2>{{book.title}}</h2>
+      <p>{{book.description}}</p>
+      <div class="flex flex-row flex-wrap column-gap-4 my-4">
+        <p-button label="Favorite" [outlined]="true" severity="secondary"><i class="pi pi-heart"
+            style="color: #dd0e1c">&nbsp;</i></p-button>
+        <p-button label="Share" [outlined]="true" severity="secondary"><i
+            class="pi pi-share-alt">&nbsp;</i></p-button>
+      </div>
+      <p>Category: 
+        @if(book.categories){
+          <span class="underline">{{book.categories.join(', ')}}</span>
+        }
+      </p>
+      <p>Year: {{book.published | date: 'yyyy'}}</p>
+      <p>Number of Pages: {{book.pages}}</p>
+      <p>Publisher: {{book.publisher}}</p>
+      <p>ISBN-10: {{book.isbn10}}</p>
+      <p>ISBN-13: {{book.isbn13}}</p>
+
+      <div class="flex flex-row flex-wrap justify-content-center mt-5">
+        <p-button label="BUY"><i class="pi pi-cart-plus">&nbsp;</i></p-button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Other Books You may like SECTION -->
+  <div class="p-col mt-7">
+    <h3>Other Books You may like</h3>
+    @if(recommendedBooks){
+      <div class="card">
+        <p-carousel [value]="recommendedBooks" [numVisible]="4" [numScroll]="3" [circular]="false"
+          [responsiveOptions]="responsiveOptions">
+          <ng-template let-recommendedBook pTemplate="item">
+            <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+              <div class="mb-3">
+                <img [src]="recommendedBook.images[0]" class="w-6 shadow-2" />
+              </div>
+              <div>
+                <h4 class="mb-1">{{recommendedBook.title}}</h4>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+    }@else{
+      <p> No recommended Books yet. </p>
+    }
+  </div>
+
+
+</div>

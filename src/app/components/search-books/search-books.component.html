@@ -1,0 +1,62 @@
+<div class="container">
+    <p-card header="Search to find your new book" subheader="Lorem ipsum dolor sit amet, consectetur adipisicing elit.">
+        <!-- Search Section -->
+        <div class="border-round surface-100 py-5">
+            <span class="p-fluid">
+                <form class=" w-7 m-auto p-float-label" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+                    <span class="p-input-icon-left">
+                        <input type="text" pInputText placeholder="Search Book" formControlName="searchInput" />
+                        <i class="pi pi-search"></i>
+                    </span>
+
+                    <div class="flex justify-content-between flex-wrap py-5">
+                        <div>
+                            <p>Select Category</p>
+                            <p-dropdown [options]="categoriesOptions" optionLabel="title" [showClear]="false"
+                                placeholder="Select Category" formControlName="categories">
+                            </p-dropdown>
+                        </div>
+
+                        <div>
+                            <p>Year Range</p>
+                            <p-calendar view="year" dateFormat="yy" selectionMode="range" formControlName="yearRange"
+                                placeholder="Start Date - End Date"></p-calendar>
+                        </div>
+
+                        <div>
+                            <p>Rating Filter</p>
+                            <p-rating [cancel]="false" formControlName="rating"></p-rating>
+                        </div>
+                    </div>
+
+
+                    <div class="flex p-3 justify-content-end flex-wrap">
+                        <p-button class="p-2" type="submit" label="Search" icon="pi pi-search"></p-button>
+                        <p-button class="p-2" label="Clear" icon="pi pi-times" severity="secondary"
+                            (click)="clearForm()"></p-button>
+                    </div>
+                </form>
+            </span>
+
+
+        </div>
+
+        <!-- Search Results Section -->
+        @if(filteredBooks) {
+            <div class="border-round surface-100 my-5 py-5">
+                @if(filteredBooks.length == 0) {
+                    <p class="text-center"> Zero books found with this search.</p>
+                }@else{
+                    <h2 class="text-center">Total Results: {{filteredBooks.length }}</h2>
+                    <div class="flex justify-content-center flex-wrap">
+                        @for (book of filteredBooks; track book.id) {
+                            <div class="w-3 m-3 cursor-pointer">
+                                <app-book-item [book]="book"></app-book-item>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </p-card>
+</div>

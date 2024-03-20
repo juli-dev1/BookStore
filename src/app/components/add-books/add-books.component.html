@@ -1,0 +1,244 @@
+<p-toast></p-toast>
+<div class="container">
+    <p-card header="Add new Book">
+
+        <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+            <div formArrayName="books">
+                <!-- @for (book of books().controls; track book) { -->
+                <div *ngFor="let book of books().controls; let i=index" [formGroupName]="i" class="pt-5">
+                    @if (i > 0) {
+                        <hr>
+                        <div class="flex justify-content-between flex-wrap my-5">
+                            <h1>Add more Books</h1>
+                            <p-button icon="pi pi-times" (click)="removeBook(i)" [rounded]="true" severity="danger" [outlined]="true"></p-button>
+                        </div>
+                    }
+                    <div class="flex flex-wrap justify-content-around w-12">
+                        <div>
+                            <div class="field grid">
+                                <label for="title" class="col-fixed" style="width:100px">Title</label>
+                                <div class="flex flex-column col">
+                                    <input id="title" type="text" formControlName="title"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                    @if(book?.get('title')?.invalid && book?.get('title')?.touched){
+                                    @if(book?.get('title')?.errors?.['required']){
+                                    <small class="text-red-500">Title is required.</small>
+                                    }
+                                    @if(book?.get('title')?.errors?.['minlength']){
+                                    <small class="text-red-500">Title must have
+                                        {{book?.get('title')?.errors?.['minlength'].requiredLength}} characters.</small>
+                                    }
+                                    @if(book?.get('title')?.errors?.['maxlength'] ){
+                                    <small class="text-red-500">Title must have
+                                        {{book?.get('title')?.errors?.['maxlength'].requiredLength}} characters.</small>
+                                    }
+                                    @if(book?.get('title')?.errors?.['pattern']){
+                                    <small class="text-red-500">Special characters other than
+                                        &quot;&#64;&quot;#&amp;*!&quot; are not valid.</small>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                            <div class="field grid">
+                                <label for="description" class="col-fixed" style="width:100px">Description</label>
+                                <div class="flex flex-column col">
+                                    <textarea rows="3" cols="0" id="description" formControlName="description"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"></textarea>
+                                    @if(book?.get('description')?.invalid && book?.get('description')?.touched){
+                                    @if(book?.get('description')?.errors?.['required']){
+                                    <small class="text-red-500">Description is required.</small>
+                                    }
+                                    @if(book?.get('description')?.errors?.['maxlength'] ){
+                                    <small class="text-red-500">Description maximun characters is
+                                        {{book?.get('description')?.errors?.['maxlength'].requiredLength}}.</small>
+                                    }
+                                    @if(book?.get('description')?.errors?.['pattern']){
+                                    <small class="text-red-500">Description must start with the first letter to be
+                                        uppercase</small>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                            <div class="field grid">
+                                <label for="categories" class="col-fixed" style="width:100px">Categories</label>
+                                <div class="flex flex-column col">
+                                    <p-chips formControlName="categories" [max]="4" placeholder="Press Enter"></p-chips>
+                                    @if(book?.get('categories')?.invalid && book?.get('categories')?.touched){
+                                    @if(book?.get('categories')?.errors?.['required']){
+                                    <small class="text-red-500">Categories is required.</small>
+                                    }
+                                    @if(book?.get('categories')?.errors?.['maxlength'] ){
+                                    <small class="text-red-500">Categories maximun lenght is
+                                        {{book?.get('categories')?.errors?.['maxlength'].requiredLength}}.</small>
+                                    }
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="field grid">
+                                <label for="author-name" class="col-fixed" style="width:100px">Author Name</label>
+                                <div class="flex flex-column col">
+                                    <p-chips formControlName="author" [max]="3" placeholder="Press Enter"></p-chips>
+                                    @if(book?.get('author')?.invalid && book?.get('author')?.touched){
+                                    @if(book?.get('author')?.errors?.['required']){
+                                    <small class="text-red-500">Autor is required.</small>
+                                    }
+                                    @if(book?.get('author')?.errors?.['maxlength'] ){
+                                    <small class="text-red-500">Autor maximun lenght is
+                                        {{book?.get('author')?.errors?.['maxlength'].requiredLength}}.</small>
+                                    }
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="field grid">
+                                <label for="publisher" class="col-fixed" style="width:100px">Publisher</label>
+                                <div class="flex flex-column col">
+                                    <input id="publisher" type="text" formControlName="publisher"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                    @if(book?.get('publisher')?.invalid && book?.get('publisher')?.touched){
+                                    @if(book?.get('publisher')?.errors?.['required']){
+                                    <small class="text-red-500">Publisher is required.</small>
+                                    }
+                                    @if(book?.get('publisher')?.errors?.['minlength']){
+                                    <small class="text-red-500">Publisher must have
+                                        {{book?.get('publisher')?.errors?.['minlength'].requiredLength}}
+                                        characters.</small>
+                                    }
+                                    @if(book?.get('publisher')?.errors?.['maxlength'] ){
+                                    <small class="text-red-500">Publisher must have
+                                        {{book?.get('publisher')?.errors?.['maxlength'].requiredLength}}
+                                        characters.</small>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                            <div class="field grid">
+                                <label for="published" class="col-fixed" style="width:100px">Published Year</label>
+                                <div class="flex flex-column col">
+                                    <p-calendar view="year" dateFormat="yy" formControlName="published"
+                                        inputId="published"></p-calendar>
+                                    @if(book?.get('published')?.invalid && book?.get('published')?.touched){
+                                    @if(book?.get('published')?.errors?.['required']){
+                                    <small class="text-red-500">Published year is required.</small>
+                                    }
+                                    @if(book?.get('published')?.errors?.['maxlength'] ){
+                                    <small class="text-red-500">Published year maximun digit are
+                                        {{book?.get('published')?.errors?.['maxlength'].requiredLength}}.</small>
+                                    }
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="field grid">
+                                <label for="page-numbers" class="col-fixed" style="width:100px">Page Numbers</label>
+                                <div class="flex flex-column col">
+                                    <input id="page-numbers" type="number" formControlName="pages"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                    @if(book?.get('pages')?.invalid && book?.get('pages')?.touched){
+                                    @if(book?.get('pages')?.errors?.['required']){
+                                    <small class="text-red-500">Pages is required.</small>
+                                    }
+                                    @if(book?.get('pages')?.errors?.['maxlength'] ){
+                                    <small class="text-red-500">Pages maximun characters is
+                                        {{book?.get('pages')?.errors?.['maxlength'].requiredLength}}.</small>
+                                    }
+                                    @if(book?.get('pages')?.errors?.['pattern']){
+                                    <small class="text-red-500">Pages must be numbers 0 to 9999</small>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="field grid">
+                                <label class="col-fixed" style="width:100px">Upload image</label>
+                                <div class="flex flex-column col align-items-start">
+                                    <app-save-images (createdImage)="onImageCreate(i, $event)"></app-save-images>
+                                    @if(book?.get('images')?.invalid && book?.get('images')?.touched){
+                                        @if(book?.get('images')?.errors?.['required']){
+                                            <div>
+                                                <small class="text-red-500">images is required.</small>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <div class="field grid">
+                                <label for="options" class="col-fixed" style="width:100px">Options</label>
+                                <div class="flex flex-column col">
+                                    <p-chips formControlName="options" placeholder="Press Enter"></p-chips>
+                                    @if(book?.get('options')?.invalid && book?.get('options')?.touched){
+                                        @if(book?.get('options')?.errors?.['required']){
+                                        <small class="text-red-500">Options is required.</small>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <div class="field grid">
+                                <label for="rating" class="col-fixed" style="width:100px">Rating</label>
+                                <div class="flex flex-column col">
+                                    <p-rating id="rating" [cancel]="false" formControlName="rating"></p-rating>
+                                    @if(book?.get('rating')?.invalid && book?.get('rating')?.touched){
+                                    @if(book?.get('rating')?.errors?.['required']){
+                                    <small class="text-red-500">Rating is required.</small>
+                                    }
+                                    @if(book?.get('rating')?.errors?.['pattern']){
+                                    <small class="text-red-500">Rating must be from 0 to 5 stars</small>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                            <div class="field grid">
+                                <label for="isbn-10" class="col-fixed" style="width:100px">ISBN-10</label>
+                                <div class="flex flex-column col">
+                                    <input id="isbn-10" type="text" formControlName="isbn10"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                    @if(book?.get('isbn10')?.invalid && book?.get('isbn10')?.touched){
+                                    @if(book?.get('isbn10')?.errors?.['required']){
+                                    <small class="text-red-500">ISBN-10 is required.</small>
+                                    }
+                                    @if(book?.get('isbn10')?.errors?.['pattern']){
+                                    <small class="text-red-500">ISBN-10 must have 10 digits</small>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                            <div class="field grid">
+                                <label for="isbn-13" class="col-fixed" style="width:100px">ISBN-13</label>
+                                <div class="flex flex-column col">
+                                    <input id="isbn-13" type="text" formControlName="isbn13"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                    @if(book?.get('isbn13')?.invalid && book?.get('isbn13')?.touched){
+                                    @if(book?.get('isbn13')?.errors?.['required']){
+                                    <small class="text-red-500">ISBN-13 is required.</small>
+                                    }
+                                    @if(book?.get('isbn13')?.errors?.['pattern']){
+                                    <small class="text-red-500">ISBN-13 must have 13 digits</small>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- } -->
+
+                <div class="flex justify-content-end flex-wrap">
+                    <div class="flex flex-column align-items-center cursor-pointer" (click)="addBook()">
+                        <i class="pi pi-plus-circle" style="font-size: 2.5rem"></i>
+                        <p>Add another book</p>
+                    </div>
+                </div>
+                <div>
+                    <p-button type="submit" label="Save"></p-button>
+                </div>
+
+
+            </div>
+        </form>
+
+    </p-card>
+</div>

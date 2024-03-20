@@ -1,0 +1,8 @@
+:host ::ng-deep p-menubarsub {
+    width: 100%;
+}
+  
+:host ::ng-deep .p-menuitem { 
+    border: 1px solid  #64748b;
+    margin: 10px; 
+}

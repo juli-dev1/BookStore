@@ -1,0 +1,8 @@
+<p-card header="{{book.title}}" (click)="redirectToBookPage(book.id)">
+    <ng-template pTemplate="header">
+        <img alt="{{book.title}}" [src]="book.images[0]" height="300px"/>
+    </ng-template>
+    <div>
+        <p-rating [(ngModel)]="bookRating" [readonly]="true" [cancel]="false"></p-rating>
+    </div>
+</p-card>
